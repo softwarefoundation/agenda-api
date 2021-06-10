@@ -36,12 +36,7 @@ public class AnotacaoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> salvar(@Valid @RequestBody AnotacaoDto anotacao, BindingResult result) {
-        if(result.hasErrors()){
-          return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                    result.getAllErrors().stream().map( e-> e.getDefaultMessage()).collect(Collectors.toList())
-            );
-        }
+    public ResponseEntity<?> salvar(@Valid @RequestBody AnotacaoDto anotacao) {
         Anotacao anotacaoSalva = anotacaoService.salvar(anotacao.toEntity());
         return ResponseEntity.status(HttpStatus.CREATED).body(anotacaoSalva);
     }
