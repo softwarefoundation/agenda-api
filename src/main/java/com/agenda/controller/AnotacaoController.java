@@ -8,7 +8,11 @@ import com.agenda.service.AnotacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/anotacao")
@@ -32,13 +36,18 @@ public class AnotacaoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> salvar(@RequestBody AnotacaoDto anotacao) {
+    public ResponseEntity<?> salvar(@Valid @RequestBody AnotacaoDto anotacao, BindingResult result) {
+        if(result.hasErrors()){
+          return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    result.getAllErrors().stream().map( e-> e.getDefaultMessage()).collect(Collectors.toList())
+            );
+        }
         Anotacao anotacaoSalva = anotacaoService.salvar(anotacao.toEntity());
         return ResponseEntity.status(HttpStatus.CREATED).body(anotacaoSalva);
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody AnotacaoDto anotacao) {
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @Valid @RequestBody AnotacaoDto anotacao) {
         Anotacao anotacaoAtualizada = anotacaoService.atualizar(id, anotacao.toEntity());
         return ResponseEntity.status(HttpStatus.OK).body(anotacaoAtualizada);
     }
@@ -50,7 +59,7 @@ public class AnotacaoController {
     }
 
     @PatchMapping(path = "/{id}")
-    public ResponseEntity<?> atualizarDataEvento(@PathVariable Long id, @RequestBody AnotacaoDataEventoDto dto){
+    public ResponseEntity<?> atualizarDataEvento(@PathVariable Long id, @Valid @RequestBody AnotacaoDataEventoDto dto){
         Anotacao anotacao = anotacaoService.atualizarDataEvento(id, dto.toEntity());
         return ResponseEntity.ok(anotacao);
     }
