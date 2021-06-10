@@ -1,5 +1,6 @@
 package com.agenda.controller;
 
+import com.agenda.dto.AnotacaoDto;
 import com.agenda.entity.Anotacao;
 import com.agenda.exceptions.RegistroNaoLocalizadoException;
 import com.agenda.service.AnotacaoService;
@@ -30,8 +31,8 @@ public class AnotacaoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> salvar(@RequestBody Anotacao anotacao) {
-        Anotacao anotacaoSalva = anotacaoService.salvar(anotacao);
+    public ResponseEntity<?> salvar(@RequestBody AnotacaoDto anotacao) {
+        Anotacao anotacaoSalva = anotacaoService.salvar(anotacao.toEntity());
         return ResponseEntity.status(HttpStatus.CREATED).body(anotacaoSalva);
     }
 
