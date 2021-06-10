@@ -1,11 +1,13 @@
 package com.agenda.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
+@DynamicUpdate
 @Entity
 @Table(name = "tb01_anotacao")
 public class Anotacao {
