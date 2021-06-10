@@ -1,5 +1,6 @@
 package com.agenda.controller;
 
+import com.agenda.dto.AnotacaoDataEventoDto;
 import com.agenda.dto.AnotacaoDto;
 import com.agenda.entity.Anotacao;
 import com.agenda.exceptions.RegistroNaoLocalizadoException;
@@ -46,6 +47,12 @@ public class AnotacaoController {
     @DeleteMapping(path = "/{id}")
     public void deletar(@PathVariable Long id) {
         anotacaoService.deletar(id);
+    }
+
+    @PatchMapping(path = "/{id}")
+    public ResponseEntity<?> atualizarDataEvento(@PathVariable Long id, @RequestBody AnotacaoDataEventoDto dto){
+        Anotacao anotacao = anotacaoService.atualizarDataEvento(id, dto.toEntity());
+        return ResponseEntity.ok(anotacao);
     }
 
 }

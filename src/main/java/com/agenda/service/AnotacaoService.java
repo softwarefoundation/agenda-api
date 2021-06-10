@@ -11,4 +11,7 @@ public interface AnotacaoService {
     Anotacao atualizar(Long id, Anotacao anotacao);
 
     void deletar(Long id);
+
+    Anotacao atualizarDataEvento(Long id, Anotacao anotacao);
+
 }

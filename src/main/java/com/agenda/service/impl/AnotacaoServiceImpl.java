@@ -35,6 +35,7 @@ public class AnotacaoServiceImpl implements AnotacaoService {
        return anotacaoRepository.findById(id).orElseThrow(()-> new RegistroNaoLocalizadoException(id));
     }
 
+    @Override
     public Anotacao atualizar(Long id, Anotacao anotacao){
         Anotacao anotacaoRetorno = pesquisarPorId(id);
         BeanUtils.copyProperties(anotacao, anotacaoRetorno,"id","dataCadastro");
@@ -45,5 +46,12 @@ public class AnotacaoServiceImpl implements AnotacaoService {
     public void deletar(Long id) {
         Anotacao anotacao = pesquisarPorId(id);
         anotacaoRepository.delete(anotacao);
+    }
+
+    @Override
+    public Anotacao atualizarDataEvento(Long id, Anotacao anotacao) {
+        Anotacao anotacaoRetorno = pesquisarPorId(id);
+        anotacaoRetorno.setDataEvento(anotacao.getDataEvento());
+        return anotacaoRepository.save(anotacaoRetorno);
     }
 }
