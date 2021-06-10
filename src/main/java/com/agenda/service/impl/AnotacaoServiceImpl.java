@@ -1,6 +1,7 @@
 package com.agenda.service.impl;
 
 import com.agenda.entity.Anotacao;
+import com.agenda.exceptions.RegistroNaoLocalizadoException;
 import com.agenda.repository.AnotacaoRepository;
 import com.agenda.service.AnotacaoService;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -28,16 +30,6 @@ public class AnotacaoServiceImpl implements AnotacaoService {
 
     @Override
     public Anotacao pesquisarPorId(Long id) {
-
-        Anotacao anotacao = new Anotacao();
-        anotacao.setId(id);
-        anotacao.setTitulo("Titulo");
-        anotacao.setTexto("Texto");
-        anotacao.setDataEvento(LocalDateTime.now());
-        anotacao.setDataCadastro(LocalDateTime.now());
-
-        log.info("Data evento: ".concat(anotacao.getDataEvento().toString()));
-
-        return anotacaoRepository.save(anotacao);
+       return anotacaoRepository.findById(id).orElseThrow(()-> new RegistroNaoLocalizadoException(id));
     }
 }

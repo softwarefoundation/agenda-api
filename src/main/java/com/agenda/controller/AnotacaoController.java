@@ -1,6 +1,7 @@
 package com.agenda.controller;
 
 import com.agenda.entity.Anotacao;
+import com.agenda.exceptions.RegistroNaoLocalizadoException;
 import com.agenda.service.AnotacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,12 +21,16 @@ public class AnotacaoController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> pesquisarPorId(@PathVariable Long id) {
-        Anotacao anotacao = anotacaoService.pesquisarPorId(id);
-        return ResponseEntity.ok(anotacao);
+        try {
+            Anotacao anotacao = anotacaoService.pesquisarPorId(id);
+            return ResponseEntity.ok(anotacao);
+        } catch (RegistroNaoLocalizadoException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
     @PostMapping
-    public ResponseEntity<?> salvar(@RequestBody Anotacao anotacao){
+    public ResponseEntity<?> salvar(@RequestBody Anotacao anotacao) {
         Anotacao anotacaoSalva = anotacaoService.salvar(anotacao);
         return ResponseEntity.status(HttpStatus.CREATED).body(anotacaoSalva);
     }
