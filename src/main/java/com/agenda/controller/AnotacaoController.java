@@ -12,7 +12,14 @@ public class AnotacaoController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> pesquisarPorId(@PathVariable Long id){
-        Anotacao anotacao = new Anotacao(id, "Titulo", "Texto", LocalDateTime.now(), LocalDateTime.now());
+
+        Anotacao anotacao = new Anotacao();
+        anotacao.setId(id);
+        anotacao.setTitulo("Titulo");
+        anotacao.setTexto("Texto");
+        anotacao.setDataEvento(LocalDateTime.now());
+        anotacao.setDataCadastro(LocalDateTime.now());
+
         return ResponseEntity.ok(anotacao);
     }
 
