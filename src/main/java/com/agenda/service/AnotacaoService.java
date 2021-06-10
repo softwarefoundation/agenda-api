@@ -4,6 +4,8 @@ import com.agenda.entity.Anotacao;
 
 public interface AnotacaoService {
 
+    Anotacao salvar(Anotacao anotacao);
+
     Anotacao pesquisarPorId(Long id);
 
 }
