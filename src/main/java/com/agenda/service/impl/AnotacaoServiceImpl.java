@@ -26,7 +26,6 @@ public class AnotacaoServiceImpl implements AnotacaoService {
 
     @Override
     public Anotacao salvar(Anotacao anotacao) {
-        anotacao.setDataCadastro(LocalDateTime.now());
         return anotacaoRepository.save(anotacao);
     }
 
