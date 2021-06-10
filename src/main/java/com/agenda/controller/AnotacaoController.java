@@ -1,23 +1,19 @@
 package com.agenda.controller;
 
+import com.agenda.entity.Anotacao;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping(path = "/anotacao")
 public class AnotacaoController {
 
-    @GetMapping
-    public ResponseEntity<?> getAnotacao(){
-        return ResponseEntity.ok("Anotação GET");
-    }
-
-    @PostMapping
-    public ResponseEntity<?> getAnotacao2(){
-        return ResponseEntity.ok("Anotação POST");
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<?> pesquisarPorId(@PathVariable Long id){
+        Anotacao anotacao = new Anotacao(id, "Titulo", "Texto", LocalDateTime.now(), LocalDateTime.now());
+        return ResponseEntity.ok(anotacao);
     }
 
 }
