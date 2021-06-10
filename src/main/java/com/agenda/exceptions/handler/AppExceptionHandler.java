@@ -1,6 +1,7 @@
-package com.agenda.exceptions;
+package com.agenda.exceptions.handler;
 
 
+import com.agenda.exceptions.RegistroNaoLocalizadoException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
