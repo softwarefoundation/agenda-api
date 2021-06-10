@@ -42,4 +42,10 @@ public class AnotacaoController {
         return ResponseEntity.status(HttpStatus.OK).body(anotacaoAtualizada);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping(path = "/{id}")
+    public void deletar(@PathVariable Long id) {
+        anotacaoService.deletar(id);
+    }
+
 }

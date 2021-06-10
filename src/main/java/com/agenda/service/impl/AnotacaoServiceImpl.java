@@ -40,4 +40,10 @@ public class AnotacaoServiceImpl implements AnotacaoService {
         BeanUtils.copyProperties(anotacao, anotacaoRetorno,"id","dataCadastro");
         return anotacaoRepository.save(anotacaoRetorno);
     }
+
+    @Override
+    public void deletar(Long id) {
+        Anotacao anotacao = pesquisarPorId(id);
+        anotacaoRepository.delete(anotacao);
+    }
 }
