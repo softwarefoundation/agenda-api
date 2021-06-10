@@ -36,4 +36,10 @@ public class AnotacaoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(anotacaoSalva);
     }
 
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody AnotacaoDto anotacao) {
+        Anotacao anotacaoAtualizada = anotacaoService.atualizar(id, anotacao.toEntity());
+        return ResponseEntity.status(HttpStatus.OK).body(anotacaoAtualizada);
+    }
+
 }

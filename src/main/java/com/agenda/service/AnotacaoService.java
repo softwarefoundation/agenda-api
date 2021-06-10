@@ -8,4 +8,5 @@ public interface AnotacaoService {
 
     Anotacao pesquisarPorId(Long id);
 
+    Anotacao atualizar(Long id, Anotacao anotacao);
 }

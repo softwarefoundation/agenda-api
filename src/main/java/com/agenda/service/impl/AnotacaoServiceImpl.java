@@ -5,6 +5,8 @@ import com.agenda.exceptions.RegistroNaoLocalizadoException;
 import com.agenda.repository.AnotacaoRepository;
 import com.agenda.service.AnotacaoService;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +33,11 @@ public class AnotacaoServiceImpl implements AnotacaoService {
     @Override
     public Anotacao pesquisarPorId(Long id) {
        return anotacaoRepository.findById(id).orElseThrow(()-> new RegistroNaoLocalizadoException(id));
+    }
+
+    public Anotacao atualizar(Long id, Anotacao anotacao){
+        Anotacao anotacaoRetorno = pesquisarPorId(id);
+        BeanUtils.copyProperties(anotacao, anotacaoRetorno,"id","dataCadastro");
+        return anotacaoRepository.save(anotacaoRetorno);
     }
 }
