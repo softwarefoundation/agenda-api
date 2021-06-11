@@ -2,6 +2,9 @@ package com.agenda.exceptions.handler;
 
 
 import com.agenda.exceptions.RegistroNaoLocalizadoException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +20,9 @@ import java.text.MessageFormat;
 @ControllerAdvice
 public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @Autowired
+    private MessageSource messageSource;
+
     @ExceptionHandler({RegistroNaoLocalizadoException.class})
     public ResponseEntity<?> handleRegistroNaoLocalizadoException(RegistroNaoLocalizadoException ex) {
 
@@ -30,7 +36,8 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 
         ProblemDetail problemDetail = prepararProblemDetail(ProblemDetailEnum.INFORMACAO_INVALIDA);
         ex.getBindingResult().getFieldErrors().forEach(e -> {
-            String detail = MessageFormat.format(e.getDefaultMessage().concat(": {0}"), e.getRejectedValue().toString());
+            String msgTemplate = messageSource.getMessage( e , LocaleContextHolder.getLocale());
+            String detail = MessageFormat.format(msgTemplate.concat(": {0}"), e.getRejectedValue().toString());
             problemDetail.getDetail().add(detail);
         });
         return prepararResponseEntity(problemDetail);
