@@ -5,6 +5,8 @@ import com.agenda.exceptions.RegistroNaoLocalizadoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.text.MessageFormat;
 
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 
